@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars_files:
-    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+    - ~/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: 02 Add a Local User that complies with Common Criteria Policy
