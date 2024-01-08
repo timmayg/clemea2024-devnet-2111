@@ -3,6 +3,8 @@
   hosts: iosxe
   gather_facts: false
   connection: network_cli
+  ansible_username: ciscolive
+  ansible_password: ciscosecure
 
   tasks:
     - name: Get the facts
