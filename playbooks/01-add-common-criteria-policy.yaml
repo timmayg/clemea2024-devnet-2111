@@ -14,12 +14,16 @@
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
                 <aaa>
-                  <new-model xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa"/>
                   <common-criteria xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa">
                     <policy>COMMON-POLICY</policy>
                     <char-changes>3</char-changes>
+                    <lower-case>1</lower-case>
                     <max-length>127</max-length>
                     <min-length>12</min-length>
+                    <numeric-count>1</numeric-count>
+                    <special-case>1</special-case>
+                    <upper-case>1</upper-case>
+                    <character-repetition>2</character-repetition>
                     <restrict-consecutive-letters/>
                   </common-criteria>
                 </aaa>
@@ -32,11 +36,11 @@
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
                 <username>
-                  <name>johnny-apples</name>
+                  <name>femke</name>
                   <privilege>15</privilege>
                   <secret>
                     <encryption>8</encryption>
-                    <secret>$8$W1gdQsmGACDv8k$Nx/n2usXnOgVOgGu/We2TeUw2Ez3RoE8Y8s9X3eKxbs</secret>
+                    <secret>$8$a6vCqQx504PUQE$xfyLv6.xWGDzpNoOeF/JyLUE2fAjZrO4EdELn.wRryI</secret>
                   </secret>
                   <common-criteria-policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa">
                     <common-criteria-policy>COMMON-POLICY</common-criteria-policy>
