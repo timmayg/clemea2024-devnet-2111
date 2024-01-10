@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars_files:
-    - ~/clemea2024-devnet-2111/vaults/ciscolive.vault
+    - - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: 01a Task to Add Common Criteria Policy
@@ -47,7 +47,7 @@
                   </common-criteria-policy>
                 </username>
                 <username>
-                  <name>johnny-apples</name>
+                  <name>femke</name>
                 </username>
               </native>
             </config>
