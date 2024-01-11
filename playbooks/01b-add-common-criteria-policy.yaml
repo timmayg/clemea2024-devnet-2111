@@ -42,13 +42,6 @@
                     <encryption>8</encryption>
                     <secret>$8$a6vCqQx504PUQE$xfyLv6.xWGDzpNoOeF/JyLUE2fAjZrO4EdELn.wRryI</secret>
                   </secret>
-                  <common-criteria-policy xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-aaa">
-                    <common-criteria-policy>COMMON-POLICY</common-criteria-policy>
-                  </common-criteria-policy>
-                </username>
-                <username>
-                  <name>femke</name>
                 </username>
               </native>
             </config>
-
