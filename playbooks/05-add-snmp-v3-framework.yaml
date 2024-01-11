@@ -9,7 +9,7 @@
     ansible_network_cli_ssh_type: libssh
 
   vars_files:
-    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+    - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: 05a Create An ACL for Permitted SNMP traffic

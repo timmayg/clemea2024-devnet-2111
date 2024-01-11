@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars_files:
-    - ~/clus2023-devnet-2111/vaults/ciscolive.vault
+    - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
     - name: 06a Task to Shutdown the Interface
