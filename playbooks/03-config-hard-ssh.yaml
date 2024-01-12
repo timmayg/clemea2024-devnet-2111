@@ -8,6 +8,16 @@
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
+    - name: 03x Create 4096 bit RSA Key Pair
+      cisco.ios.ios_config:
+        lines:
+          - crypto key generate rsa modulus 4096 label my-4096rsa-ssh-key
+
+    - name: 03x Configure SSH Server to Use 4096 bit RSA Key
+      cisco.ios.ios_config:
+        lines:
+          - ip ssh rsa keypair-name my-4096rsa-ssh-key
+
     - name: 03a Configure SSH Server for Keyboard Authentication
       cisco.ios.ios_config:
         lines:
