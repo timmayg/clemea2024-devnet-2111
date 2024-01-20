@@ -4,7 +4,6 @@
   gather_facts: false
   connection: network_cli
 
-
   vars_files:
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
@@ -19,7 +18,7 @@
                 aces:
                   - grant: permit
                     source:
-                      address: 10.1.1.0
+                      address: 192.168.10.0
                       wildcard_bits: 0.0.0.255
 
     - name: 05b Create Read Only and Read Write SNMPv3 Views
@@ -50,11 +49,11 @@
               acl_v4: snmp-access
               read: snmp-v3-ReadWrite-View
 
-    - name: 05d Create An SNMPv3 User
+    - name: 05d Create SNMPv3 Users
       cisco.ios.ios_snmp_server:
         config:
           users:
-            - username: charlie-ReadOnly
+            - username: willem-ReadOnly
               group: snmp-v3-ReadOnly
               version: v3
               authentication:
