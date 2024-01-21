@@ -1,9 +1,9 @@
 ---
 - name: 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
   hosts: iosxe
-  gather_facts: false
   connection: network_cli
-
+  gather_facts: false
+  
   vars_files:
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
@@ -16,3 +16,6 @@
               family_name: iso
               included: true
 
+            - name: snmp-v3-ReadWrite-View
+              family_name: iso
+              included: true
