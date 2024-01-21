@@ -1,0 +1,26 @@
+---
+- name: 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
+  hosts: iosxe
+  gather_facts: false
+  connection: network_cli
+
+  #vars:
+  #  ansible_network_os: cisco.ios.ios
+  #  ansible_network_cli_ssh_type: libssh
+
+  vars_files:
+    - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
+
+  tasks:
+    - name: 05a Create An ACL for Permitted SNMP traffic
+      cisco.ios.ios_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: snmp-access
+                acl_type: standard
+                aces:
+                  - grant: permit
+                    source:
+                      address: 192.168.10.0
+                      wildcard_bits: 0.0.0.255
