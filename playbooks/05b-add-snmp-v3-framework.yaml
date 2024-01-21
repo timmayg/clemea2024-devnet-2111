@@ -15,6 +15,7 @@
             - name: snmp-v3-ReadOnly-View
               family_name: iso
               included: true
+              
             - name: snmp-v3-ReadWrite-View
               family_name: iso
               included: true
