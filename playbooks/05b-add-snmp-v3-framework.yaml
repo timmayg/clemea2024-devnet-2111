@@ -13,10 +13,10 @@
       cisco.ios.ios_snmp_server:
         config:
           views:
-            - name: snmp-v3-ReadOnly-View
+            - name: roview
               family_name: iso
               included: true
-            
-            - name: snmp-v3-ReadWrite-View
+
+            - name: rwview
               family_name: iso
               included: true
