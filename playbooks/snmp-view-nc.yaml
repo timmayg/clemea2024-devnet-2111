@@ -57,6 +57,7 @@
                     <v3>
                       <security-level>priv</security-level>
                       <read>snmp-v3-ReadOnly-View</read>
+                      <access>snmp-access</access>
                     </v3>
                   </group>
                 </snmp-server>
@@ -74,6 +75,7 @@
                     <v3>
                       <security-level>priv</security-level>
                       <write>snmp-v3-ReadWrite-View</write>
+                      <access>snmp-access</access>
                     </v3>
                   </group>
                 </snmp-server>
