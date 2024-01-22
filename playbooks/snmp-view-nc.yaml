@@ -121,6 +121,10 @@
               </native>
             </config>
 
+    - name: Pause for 5 seconds
+      pause:
+        seconds: 5
+  
     - name: 05d Create SNMPv3 Read Write User
       netconf_config:
         xml: |
