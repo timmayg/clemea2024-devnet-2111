@@ -145,10 +145,10 @@
               </native>
             </config>
 
-    - name: Pause for 10 seconds to permit NETCONF DB Sync
+    - name: Pause permit Config & NETCONF DB Sync
       pause:
-        seconds: 10
-  
+        seconds: 15
+
     - name: 05g Create SNMPv3 Read Write User
       ansible.netcommon.netconf_config:
         xml: |
