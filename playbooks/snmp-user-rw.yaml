@@ -45,7 +45,6 @@
                       <grpname>snmp-v3-ReadWrite</grpname>
                       <v3>
                         <auth-config>
-                          <algorithm>sha</algorithm>
                           <sha-2>512</sha-2>
                           <password>ciscolive123</password>
                           <priv-config>
