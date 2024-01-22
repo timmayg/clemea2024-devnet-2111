@@ -25,7 +25,7 @@
 #IP_ADDRESS_HERE
 #
 - name : snmp-view
-  hosts: MY_HOST_NAME
+  hosts: iosxe
   connection: netconf
   gather_facts: no
 
