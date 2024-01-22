@@ -29,6 +29,9 @@
   connection: netconf
   gather_facts: no
 
+  vars_files:
+    - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
+
   tasks:
     - name: snmp-view
       netconf_config:
