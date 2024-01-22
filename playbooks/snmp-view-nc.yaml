@@ -82,7 +82,7 @@
               </native>
             </config>
 
-    - name: snmp-user-ro
+    - name: 05d Create SNMPv3 Read Only User
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -115,6 +115,41 @@
                     <names>
                       <username>willem-ReadOnly</username>
                       <grpname>snmp-v3-ReadOnly</grpname>
+                    </names>
+                  </user>
+                </snmp-server>
+              </native>
+            </config>
+
+    - name: 05d Create SNMPv3 Read Write User
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <user xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <names>
+                      <username>kashvi-ReadWrite</username>
+                      <grpname>snmp-v3-ReadWrite</grpname>
+                      <v3>
+                        <auth-config>
+                          <sha-2>512</sha-2>
+                          <password>ciscolive123</password>
+                          <priv-config>
+                           <aes>
+                              <algorithm>256</algorithm>
+                              <password>ciscolive123</password>
+                              <access-config>
+                                <acl-name>snmp-access</acl-name>
+                              </access-config>
+                            </aes>
+                          </priv-config>
+                        </auth-config>
+                      </v3>
+                    </names>
+                    <names>
+                      <username>kashvi-ReadWrite</username>
+                      <grpname>snmp-v3-ReadWrite</grpname>
                     </names>
                   </user>
                 </snmp-server>
