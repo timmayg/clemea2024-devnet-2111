@@ -33,7 +33,7 @@
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: snmp-view
+    - name: Create SNMP View For Read Only Group
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -46,6 +46,25 @@
                   </view>
                   <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
                     <name>snmp-v3-ReadOnly-View</name>
+                    <mib>iso</mib>
+                  </view>
+                </snmp-server>
+              </native>
+            </config>
+
+    - name: Create SNMP View For Read Write Group
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadWrite-View</name>
+                    <mib>iso</mib>
+                    <inc-exl>included</inc-exl>
+                  </view>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadWrite-View</name>
                     <mib>iso</mib>
                   </view>
                 </snmp-server>
