@@ -82,3 +82,42 @@
               </native>
             </config>
 
+    - name: snmp-user-ro
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <user xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <names>
+                      <username>willem-ReadOnly</username>
+                      <grpname>snmp-v3-ReadOnly</grpname>
+                      <v3>
+                        <auth>
+                          <sha>
+                            <auth>
+                              <authpass>ciscolive123</authpass>
+                              <priv>
+                                <aes>
+                                  <algo128>
+                                    <privpass>
+                                      <privpass>ciscolive123</privpass>
+                                      <access>snmp-access</access>
+                                    </privpass>
+                                  </algo128>
+                                </aes>
+                              </priv>
+                            </auth>
+                          </sha>
+                        </auth>
+                      </v3>
+                    </names>
+                    <names>
+                      <username>willem-ReadOnly</username>
+                      <grpname>snmp-v3-ReadOnly</grpname>
+                    </names>
+                  </user>
+                </snmp-server>
+              </native>
+            </config>
+
