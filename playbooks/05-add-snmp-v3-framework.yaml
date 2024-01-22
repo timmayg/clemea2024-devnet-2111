@@ -1,83 +1,186 @@
 ---
-- name: 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
+- name : 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
   hosts: iosxe
+  connection: netconf
   gather_facts: false
-  connection: network_cli
-
-  #vars:
-  #  ansible_network_os: cisco.ios.ios
-  #  ansible_network_cli_ssh_type: libssh
 
   vars_files:
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: 05a Create An ACL for Permitted SNMP traffic
-      cisco.ios.ios_acls:
-        config:
-          - afi: ipv4
-            acls:
-              - name: snmp-access
-                acl_type: standard
-                aces:
-                  - grant: permit
-                    source:
-                      address: 192.168.10.0
-                      wildcard_bits: 0.0.0.255
+    - name: 05a Create Standard Access List Permitting Specific Access to IOS XE SNMP Server
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <ip>
+                  <access-list>
+                    <standard xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-acl">
+                      <name>snmp-access</name>
+                      <access-list-seq-rule>
+                        <sequence>10</sequence>
+                        <permit>
+                          <std-ace>
+                            <ipv4-address-prefix>192.168.10.0</ipv4-address-prefix>
+                            <mask>0.0.0.255</mask>
+                          </std-ace>
+                        </permit>
+                      </access-list-seq-rule>
+                    </standard>
+                  </access-list>
+                </ip>
+              </native>
+            </config>
 
-    - name: 05b Create Read Only and Read Write SNMPv3 Views
-      cisco.ios.ios_snmp_server:
-        config:
-          views:
-            - name: snmp-v3-ReadOnly-View
-              family_name: iso
-              included: true
+    - name: 05b Create Read Only SNMPv3 View
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadOnly-View</name>
+                    <mib>iso</mib>
+                    <inc-exl>included</inc-exl>
+                  </view>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadOnly-View</name>
+                    <mib>iso</mib>
+                  </view>
+                </snmp-server>
+              </native>
+            </config>
 
-            - name: snmp-v3-ReadWrite-View
-              family_name: iso
-              included: true
+    - name: 05c Create Read Write SNMPv3 View
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadWrite-View</name>
+                    <mib>iso</mib>
+                    <inc-exl>included</inc-exl>
+                  </view>
+                  <view xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <name>snmp-v3-ReadWrite-View</name>
+                    <mib>iso</mib>
+                  </view>
+                </snmp-server>
+              </native>
+            </config>
 
-    - name: 05c Create Read Only and Read Write SNMPv3 Groups
-      cisco.ios.ios_snmp_server:
-        config:
-          groups:
-            - group: snmp-v3-ReadOnly
-              version: v3
-              version_option: priv
-              acl_v4: snmp-access
-              read: snmp-v3-ReadOnly-View
+    - name: 05d Create Read Only SNMPv3 Group
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <group xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <id>snmp-v3-ReadOnly</id>
+                    <v3>
+                      <security-level>priv</security-level>
+                      <read>snmp-v3-ReadOnly-View</read>
+                      <access>snmp-access</access>
+                    </v3>
+                  </group>
+                </snmp-server>
+              </native>
+            </config>
 
-            - group: snmp-v3-ReadWrite
-              version: v3
-              version_option: priv
-              acl_v4: snmp-access
-              read: snmp-v3-ReadWrite-View
+    - name: 05e Create Read Write SNMPv3 Group
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <group xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <id>snmp-v3-ReadWrite</id>
+                    <v3>
+                      <security-level>priv</security-level>
+                      <write>snmp-v3-ReadWrite-View</write>
+                      <access>snmp-access</access>
+                    </v3>
+                  </group>
+                </snmp-server>
+              </native>
+            </config>
 
-    - name: 05d Create SNMPv3 Users
-      cisco.ios.ios_snmp_server:
-        config:
-          users:
-            - username: willem-ReadOnly
-              group: snmp-v3-ReadOnly
-              version: v3
-              authentication:
-                algorithm: sha
-                password: ciscolive123
-              encryption:
-                priv: aes
-                priv_option: 128
-                password: ciscolive123
-              acl_v4: snmp-access
+    - name: 05f Create SNMPv3 Read Only User
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <user xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <names>
+                      <username>willem-ReadOnly</username>
+                      <grpname>snmp-v3-ReadOnly</grpname>
+                      <v3>
+                        <auth>
+                          <sha>
+                            <auth>
+                              <authpass>ciscolive123</authpass>
+                              <priv>
+                                <aes>
+                                  <algo128>
+                                    <privpass>
+                                      <privpass>ciscolive123</privpass>
+                                      <access>snmp-access</access>
+                                    </privpass>
+                                  </algo128>
+                                </aes>
+                              </priv>
+                            </auth>
+                          </sha>
+                        </auth>
+                      </v3>
+                    </names>
+                    <names>
+                      <username>willem-ReadOnly</username>
+                      <grpname>snmp-v3-ReadOnly</grpname>
+                    </names>
+                  </user>
+                </snmp-server>
+              </native>
+            </config>
 
-            - username: kashvi-ReadWrite
-              group: snmp-v3-ReadWrite
-              version: v3
-              authentication:
-                algorithm: sha
-                password: ciscolive123
-              encryption:
-                priv: aes
-                priv_option: 128
-                password: ciscolive123
-              acl_v4: snmp-access
- 
+    - name: Pause for 10 seconds to permit NetConf DB Sync
+      pause:
+        seconds: 10
+  
+    - name: 05g Create SNMPv3 Read Write User
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <user xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <names>
+                      <username>kashvi-ReadWrite</username>
+                      <grpname>snmp-v3-ReadWrite</grpname>
+                      <v3>
+                        <auth-config>
+                          <sha-2>512</sha-2>
+                          <password>ciscolive123</password>
+                          <priv-config>
+                           <aes>
+                              <algorithm>256</algorithm>
+                              <password>ciscolive123</password>
+                              <access-config>
+                                <acl-name>snmp-access</acl-name>
+                              </access-config>
+                            </aes>
+                          </priv-config>
+                        </auth-config>
+                      </v3>
+                    </names>
+                    <names>
+                      <username>kashvi-ReadWrite</username>
+                      <grpname>snmp-v3-ReadWrite</grpname>
+                    </names>
+                  </user>
+                </snmp-server>
+              </native>
+            </config>
+
