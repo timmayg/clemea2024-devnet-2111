@@ -9,7 +9,7 @@
 
   tasks:
     - name: 05b Create Read Only SNMPv3 View
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -28,7 +28,7 @@
             </config>
 
     - name: 05b Create Read Write SNMPv3 View
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -47,7 +47,7 @@
             </config>
 
     - name: 05c Create Read Only SNMPv3 Group
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -65,7 +65,7 @@
             </config>
 
     - name: 05c Create Read Write SNMPv3 Group
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -83,7 +83,7 @@
             </config>
 
     - name: 05d Create SNMPv3 Read Only User
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -123,10 +123,10 @@
 
     - name: Pause for 5 seconds
       pause:
-        seconds: 5
+        seconds: 10
   
     - name: 05d Create SNMPv3 Read Write User
-      netconf_config:
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
