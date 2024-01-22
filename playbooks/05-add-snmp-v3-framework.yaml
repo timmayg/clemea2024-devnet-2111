@@ -1,5 +1,5 @@
 ---
-- name : 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
+- name: 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
   hosts: iosxe
   connection: netconf
   gather_facts: false
@@ -8,8 +8,8 @@
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: 05a Create Standard Access List Permitting Specific Access to IOS XE SNMP Server
-      netconf_config:
+    - name: 05a Create Standard Access List Permitting Access to IOS XE SNMP Server
+      ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
               <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
@@ -145,7 +145,7 @@
               </native>
             </config>
 
-    - name: Pause for 10 seconds to permit NetConf DB Sync
+    - name: Pause for 10 seconds to permit NETCONF DB Sync
       pause:
         seconds: 10
   
