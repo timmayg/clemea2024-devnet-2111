@@ -1,39 +1,14 @@
-
-# Ansible will need some basic information to make sure
-# it can connect to the target device before attempting
-# a NETCONF message. Ansible will look in the same directory
-# as the playbook file for ansible.cfg.
-#
-# Nearly all parameters in ansible.cfg can be overridden
-# with ansible-playbook command line flags.
-
-# Example of basic ansible.cfg file
-#
-#[defaults]
-#inventory = ./ansible_host
-#host_key_checking = False
-#remote_user = USERNAME_HERE
-
-# Example of basic ansible_host file referred to in
-# ansible.cfg inventory.
-#
-#[all:vars]
-#ansible_connection=netconf
-#ansible_password=PASSWORD_HERE
-#
-#[MY_HOST_NAME]
-#IP_ADDRESS_HERE
-#
-- name : snmp-view
+---
+- name : 05 This Playbook will create an SNMPv3 Framework on an IOS XE Device
   hosts: iosxe
   connection: netconf
-  gather_facts: no
+  gather_facts: false
 
   vars_files:
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: Create SNMP View For Read Only Group
+    - name: 05b Create Read Only SNMPv3 View
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -52,7 +27,7 @@
               </native>
             </config>
 
-    - name: Create SNMP View For Read Write Group
+    - name: 05b Create Read Write SNMPv3 View
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -67,6 +42,40 @@
                     <name>snmp-v3-ReadWrite-View</name>
                     <mib>iso</mib>
                   </view>
+                </snmp-server>
+              </native>
+            </config>
+
+    - name: 05c Create Read Only SNMPv3 Group
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <group xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <id>snmp-v3-ReadOnly</id>
+                    <v3>
+                      <security-level>priv</security-level>
+                      <read>snmp-v3-ReadOnly-View</read>
+                    </v3>
+                  </group>
+                </snmp-server>
+              </native>
+            </config>
+
+    - name: 05c Create Read Write SNMPv3 Group
+      netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <snmp-server>
+                  <group xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-snmp">
+                    <id>snmp-v3-ReadWrite</id>
+                    <v3>
+                      <security-level>priv</security-level>
+                      <write>snmp-v3-ReadWrite-View</write>
+                    </v3>
+                  </group>
                 </snmp-server>
               </native>
             </config>
