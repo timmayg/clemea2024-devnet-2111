@@ -24,7 +24,7 @@
 #[MY_HOST_NAME]
 #IP_ADDRESS_HERE
 #
-- name : snmp-rw-user
+- name : snmp-user-rw
   hosts: iosxe
   connection: netconf
   gather_facts: no
@@ -33,7 +33,7 @@
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
 
   tasks:
-    - name: snmp-rw-user
+    - name: snmp-user-rw
       netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
@@ -45,15 +45,13 @@
                       <grpname>snmp-v3-ReadWrite</grpname>
                       <v3>
                         <auth-config>
+                          <algorithm>sha</algorithm>
                           <sha-2>512</sha-2>
                           <password>ciscolive123</password>
                           <priv-config>
                             <aes>
                               <algorithm>256</algorithm>
                               <password>ciscolive123</password>
-                              <access-config>
-                                <standard-acl/>
-                              </access-config>
                             </aes>
                           </priv-config>
                         </auth-config>
