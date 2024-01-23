@@ -1,7 +1,7 @@
 ---
 - name: 06 Playbook to Enable Stong Encryption
   hosts: iosxe
-  connection: network_cli
+  connection: netconf
   gather_facts: false
 
   vars_files:
