@@ -40,7 +40,7 @@
              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
                <key>
                  <config-key xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
-                   <newpass>{{ type-6-secret }}</newpass>
+                   <newpass>{{ type_6_secret }}</newpass>
                  </config-key>
                </key>
              </native>

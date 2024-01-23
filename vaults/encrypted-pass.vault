@@ -1,3 +1,3 @@
 snmp-v3-auth-pass: ciscolive123
 snmp-v3-priv-pass: ciscolive123
-type-6-secret: ciscolive123
+type_6_secret: ciscolive123
