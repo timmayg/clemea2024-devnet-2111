@@ -6,6 +6,7 @@
 
   vars_files:
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
+    - /etc/ansible/clemea2024-devnet-2111/vaults/encrypted-pass.vault
 
   tasks:
     - name: 05a Create Standard Access List Permitting Access to IOS XE SNMP Server
@@ -120,12 +121,12 @@
                         <auth>
                           <sha>
                             <auth>
-                              <authpass>ciscolive123</authpass>
+                              <authpass>{{ willem_auth_pass }}</authpass>
                               <priv>
                                 <aes>
                                   <algo128>
                                     <privpass>
-                                      <privpass>ciscolive123</privpass>
+                                      <privpass>{{ willem_priv_pass }}</privpass>
                                       <access>snmp-access</access>
                                     </privpass>
                                   </algo128>
@@ -162,11 +163,11 @@
                       <v3>
                         <auth-config>
                           <sha-2>512</sha-2>
-                          <password>ciscolive123</password>
+                          <password>{{ kashvi_auth_pass }}</password>
                           <priv-config>
                            <aes>
                               <algorithm>256</algorithm>
-                              <password>ciscolive123</password>
+                              <password>{{ willem_priv_pass }}</password>
                               <access-config>
                                 <acl-name>snmp-access</acl-name>
                               </access-config>
