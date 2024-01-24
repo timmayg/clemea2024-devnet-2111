@@ -1,0 +1,47 @@
+---
+- name: 06 Playbook to Enable Stong Encryption
+  hosts: iosxe
+  connection: netconf
+  gather_facts: false
+
+  vars_files:
+    - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
+    - /etc/ansible/clemea2024-devnet-2111/vaults/encrypted-pass.vault
+
+  tasks:
+    - name: 06a - Encrypt Private Config File
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <service>
+                  <private-config-encryption/>
+                </service>
+              </native>
+            </config>
+
+    - name: 06b - Enable AES Password Encryption
+      ansible.netcommon.netconf_config:
+        xml: |
+            <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+              <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <password>
+                  <encryption>
+                    <aes/>
+                  </encryption>
+                </password>
+              </native>
+            </config>
+
+    - name: 06c - Configure the AES Encryption Key
+      ansible.netcommon.netconf_config:
+       xml: |
+           <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+             <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+               <key>
+                 <config-key xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
+                   <newpass>{{ type_6_secret }}</newpass>
+                 </config-key>
+               </key>
+             </native>
+           </config>
