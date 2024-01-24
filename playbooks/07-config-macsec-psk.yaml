@@ -1,5 +1,5 @@
 ---
-- name: Configure MACsec on Gig 1/0/1 Playbook using YANG Models
+- name: Configure MACsec on Gig 1/0/1 Playbook
   hosts: iosxe
   connection: netconf
   gather_facts: false
