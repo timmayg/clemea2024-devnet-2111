@@ -38,7 +38,7 @@
                       </cryptographic-algorithm-choice>
                       <key-string>
                         <encryption>0</encryption>
-                        <key>1234567812345678123456781234567812345678123456781234567812345678</key>
+                        <key>{{ macsec_psk }}</key>
                       </key-string>
                     </key>
                   </chain>
