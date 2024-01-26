@@ -8,6 +8,7 @@
     - /etc/ansible/clemea2024-devnet-2111/vaults/ciscolive.vault
     - /etc/ansible/clemea2024-devnet-2111/vaults/encrypted-pass.vault
 
+  tasks:
     - name: 06a - Enable AES Password Encryption
       ansible.netcommon.netconf_config:
         xml: |
