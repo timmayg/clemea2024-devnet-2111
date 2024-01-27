@@ -167,7 +167,7 @@
                           <priv-config>
                            <aes>
                               <algorithm>256</algorithm>
-                              <password>{{ willem_priv_pass }}</password>
+                              <password>{{ kashvi_priv_pass }}</password>
                               <access-config>
                                 <acl-name>snmp-access</acl-name>
                               </access-config>
