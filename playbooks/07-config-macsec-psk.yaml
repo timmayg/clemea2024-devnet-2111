@@ -136,7 +136,7 @@
               </native>
             </config>
 
-    - name: 06e No Shut the Interface
+    - name: 06h No Shut the Interface
       ansible.netcommon.netconf_config:
         xml: |
             <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
