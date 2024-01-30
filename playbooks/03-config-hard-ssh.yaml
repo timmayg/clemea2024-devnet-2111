@@ -12,12 +12,12 @@
     - name: 03a Create 4096 bit RSA Key Pair
       cisco.ios.ios_config:
         lines:
-          - crypto key generate rsa modulus 4096 label my-4096rsa-key
+          - crypto key generate rsa modulus 4096 label my-4096rsa-ssh-key
 
-    - name: 03b Configure SSH Server to Use 4096 bit RSA Key 
+    - name: 03b Configure SSH Server to Use 4096 bit RSA Key
       cisco.ios.ios_config:
         lines:
-          - ip ssh rsa keypair-name my-4096rsa-key
+          - ip ssh rsa keypair-name my-4096rsa-ssh-key
 
     - name: 03c Configure SSH Server for Keyboard Authentication
       cisco.ios.ios_config:
